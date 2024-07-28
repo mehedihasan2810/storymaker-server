@@ -1,0 +1,1 @@
+ALTER TABLE "stories" ADD COLUMN "prompt" text NOT NULL;
