@@ -76,24 +76,24 @@ export const storyResolver = {
     async createStory(_, { prompt, email, userId }) {
       console.log({ prompt, email, userId });
 
-      const createdStoryRes1 = await db
-        .insert(stories)
-        .values({
-          title: "title",
-          imageUrl: "image url",
-          audioUrl: "audio url",
-          story: "story",
-          imagePrompt: "image prompt",
-          status: "draft",
-          email,
-          prompt,
-        })
-        .returning()
-        .then((res) => res[0]);
+      // const createdStoryRes1 = await db
+      //   .insert(stories)
+      //   .values({
+      //     title: "title",
+      //     imageUrl: "image url",
+      //     audioUrl: "audio url",
+      //     story: "story",
+      //     imagePrompt: "image prompt",
+      //     status: "draft",
+      //     email,
+      //     prompt,
+      //   })
+      //   .returning()
+      //   .then((res) => res[0]);
 
-      console.log({ createdStoryRes1 });
+      // console.log({ createdStoryRes1 });
 
-      return createdStoryRes1;
+      // return createdStoryRes1;
 
       console.log(`
         -----------------------
@@ -110,7 +110,8 @@ export const storyResolver = {
             // content: "Write a story about cinderella",
           },
         ],
-        model: "gpt-4o",
+        model: "gpt-4o-mini",
+        // model: "gpt-4o",
         // model: "gpt-4-1106-preview",
         user: userId,
       });
@@ -271,7 +272,7 @@ async function uploadStoryFiles(imageBuffer, audioBuffer, title) {
 
   const [imageUrl, audioUrl] = await Promise.all([
     (async function uploadStoryImage() {
-      const imageKey = `story-maker/images/web-images/${title.replace(
+      const imageKey = `story-maker/images/web-images/${title.replaceAll(
         " ",
         "-"
       )}-${Date.now()}-webp`;
@@ -302,7 +303,7 @@ async function uploadStoryFiles(imageBuffer, audioBuffer, title) {
       const audioKey = `story-maker/audios/${title.replace(
         " ",
         "-"
-      )}-${Date.now()}-webp`;
+      )}-${Date.now()}-mpeg`;
 
       const params = {
         Bucket: process.env.S3_BUCKET_NAME,

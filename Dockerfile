@@ -1,7 +1,14 @@
-FROM node:20
+FROM --platform=linux/ARM64 node:20
+# FROM node:20
+
 WORKDIR /app
+
 COPY package*.json ./
+
 RUN npm install
+
 COPY . .
-EXPOSE 5000
+
+EXPOSE 8000
+
 CMD ["npm","run","start"]

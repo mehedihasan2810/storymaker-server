@@ -5,12 +5,12 @@ import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@apollo/server/express4";
 import { resolvers } from "./resolvers/index.js";
 import { typeDefs } from "./typeDefs/index.js";
-
 import { stories } from "./lib/db/schema.js";
 import { db } from "./lib/db/index.js";
+
 import "dotenv/config";
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(morgan("dev"));
@@ -29,7 +29,11 @@ await server.start();
 app.use("/graphql", cors(), json(), expressMiddleware(server));
 
 app.get("/", async (_, res) => {
-  res.status(200).send("I am aliveee...");
+  res.status(200).send("I am aliveee... 👀");
+});
+
+app.get("/health", async (_, res) => {
+  res.status(200).send({ message: "Everything is good here 👀" });
 });
 
 app.get("/test", async (_, res) => {
