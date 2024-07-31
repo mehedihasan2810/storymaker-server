@@ -76,25 +76,6 @@ export const storyResolver = {
     async createStory(_, { prompt, email, userId }) {
       console.log({ prompt, email, userId });
 
-      // const createdStoryRes1 = await db
-      //   .insert(stories)
-      //   .values({
-      //     title: "title",
-      //     imageUrl: "image url",
-      //     audioUrl: "audio url",
-      //     story: "story",
-      //     imagePrompt: "image prompt",
-      //     status: "draft",
-      //     email,
-      //     prompt,
-      //   })
-      //   .returning()
-      //   .then((res) => res[0]);
-
-      // console.log({ createdStoryRes1 });
-
-      // return createdStoryRes1;
-
       console.log(`
         -----------------------
          Story generation start
