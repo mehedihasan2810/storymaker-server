@@ -20,6 +20,7 @@ type Story {
 type Query {
     stories(limit: Int, offset: Int): [Story]!
     story(id: String!): Story
+    yourCreatedStories(email: String, limit: Int, offset: Int): [Story]!
 }
 
 type Mutation {

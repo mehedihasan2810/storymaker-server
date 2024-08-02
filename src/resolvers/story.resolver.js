@@ -71,6 +71,31 @@ export const storyResolver = {
       //   story: "story",
       // };
     },
+
+    async yourCreatedStories(_, { email, limit, offset }) {
+      console.log({ email, limit, offset });
+
+      const createdStoriesRes = await db
+        .select()
+        .from(stories)
+        .where(eq(stories.email, email))
+        .limit(limit)
+        .offset(offset);
+
+      console.log({ createdStoriesRes });
+
+      return createdStoriesRes;
+
+      // return [
+      //   {
+      //     id: "",
+      //     title: "title",
+      //     imageUrl: "image url",
+      //     audioUrl: "audio url",
+      //     story: "story",
+      //   },
+      // ];
+    },
   },
   Mutation: {
     async createStory(_, { prompt, email, userId }) {
