@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { asc, desc, eq, ilike } from "drizzle-orm";
 import { db } from "../lib/db/index.js";
 import { stories } from "../lib/db/schema.js";
 import sharp from "sharp";
@@ -37,7 +37,7 @@ export const storyResolver = {
         .limit(limit)
         .offset(offset);
 
-      console.log({ storiesRes });
+      // console.log({ storiesRes });
 
       return storiesRes;
 
@@ -95,6 +95,43 @@ export const storyResolver = {
       //     story: "story",
       //   },
       // ];
+    },
+
+    async searchStories(_, { query, sortBy = "newest", limit, offset }) {
+      console.log({ query, sortBy, limit, offset });
+
+      const trimmedQuery = query.trim();
+
+      console.log({ trimmedQuery });
+
+      const searchedStories = await db
+        .select()
+        .from(stories)
+        .where(ilike(stories.title, `%${trimmedQuery}%`))
+        .orderBy(
+          sortBy === "newest" ? desc(stories.createdAt) : asc(stories.createdAt)
+        )
+        .limit(limit)
+        .offset(offset);
+
+      // console.log({ searchedStories });
+
+      return searchedStories;
+    },
+
+    async featuredStory(_, { id }) {
+      console.log({ id });
+
+      const featuredStory = await db
+        .select()
+        .from(stories)
+        .orderBy(desc(stories.createdAt))
+        .limit(1)
+        .then((res) => res[0]);
+
+      console.log({ featuredStory });
+
+      return featuredStory;
     },
   },
   Mutation: {
@@ -300,7 +337,7 @@ async function uploadStoryFiles(imageBuffer, audioBuffer, title) {
 
       console.log({ imageUrl });
 
-      console.log("Upload successful ", response);
+      console.log("Image upload successful ", response);
       return imageUrl;
     })(),
     (async function uploadStoryAudio() {
@@ -328,7 +365,7 @@ async function uploadStoryFiles(imageBuffer, audioBuffer, title) {
 
       console.log({ audioUrl });
 
-      console.log("Upload successful ", response);
+      console.log("Audio upload successful ", response);
       return audioUrl;
     })(),
   ]);

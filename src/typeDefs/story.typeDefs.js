@@ -21,6 +21,8 @@ type Query {
     stories(limit: Int, offset: Int): [Story]!
     story(id: String!): Story
     yourCreatedStories(email: String, limit: Int, offset: Int): [Story]!
+    searchStories(query: String, sortBy: String, limit: Int, offset: Int): [Story]!
+    featuredStory(id: String): Story!
 }
 
 type Mutation {
