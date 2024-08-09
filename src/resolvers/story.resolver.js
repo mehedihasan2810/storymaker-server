@@ -344,7 +344,7 @@ async function uploadStoryFiles(imageBuffer, audioBuffer, title) {
     (async function uploadStoryAudio() {
       if (!audioBuffer) return null;
 
-      const audioKey = `story-maker/audios/${title.replace(
+      const audioKey = `story-maker/audios/${title.replaceAll(
         " ",
         "-"
       )}-${Date.now()}-mpeg`;
