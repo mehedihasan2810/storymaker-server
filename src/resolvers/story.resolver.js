@@ -239,7 +239,8 @@ const generateImage = async (imagePrompt) => {
 
   const image = await openai.images.generate({
     model: "dall-e-3",
-    prompt: `In a vibrant, colorful, cinematic illustration style: ${imagePrompt}`,
+    prompt: `${imagePrompt}`,
+    // prompt: `In a vibrant, colorful, cinematic illustration style: ${imagePrompt}`,
     // prompt: `In a vibrant, colorful, cinematic illustration style: Illustrate a friendly robin wearing a tiny emerald cape, with a group of woodland animals working together to build a birdhouse, in a vibrant forest setting, using a modern, simple, flat cartoon style appropriate for young children.`,
     // size: "1792x1024",
     size: "1024x1024",
